@@ -308,7 +308,7 @@ export class BarChartExtendedComponent implements OnChanges {
 
   private formatTickDisplayY(invertAxis: boolean) {
     if (!invertAxis) {
-      let ticks = d3.selectAll('.y-axis .tick text')
+      let ticks = d3.select(this.chart.nativeElement).selectAll('.y-axis .tick text')
       ticks.style('display', (d, i) => (i % 2) ? 'none' : 'initial')
     }
   }
