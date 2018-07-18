@@ -1,0 +1,25 @@
+
+/*
+  © 2014-2018 Rocket Software, Inc. or its affiliates. All Rights Reserved.
+  ROCKET SOFTWARE, INC. CONFIDENTIAL
+*/
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-chart-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-chart {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+  © 2014-2018 Rocket Software, Inc. or its affiliates. All Rights Reserved.
+  ROCKET SOFTWARE, INC. CONFIDENTIAL
+*/
