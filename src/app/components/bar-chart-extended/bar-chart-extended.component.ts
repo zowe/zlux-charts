@@ -59,7 +59,13 @@ export class BarChartExtendedComponent implements OnChanges {
   ngOnChanges(simpleChanges: SimpleChanges) {
     console.log(this.data);
 
-    if (this.getDataLength(this.data) > 0) {
+    // Remove duplicates if categories changed
+    if(JSON.stringify(simpleChanges.categories.currentValue) !== JSON.stringify(simpleChanges.categories.previousValue)) {
+      this.categories = this.removeCategoryDuplicates(this.categories);
+    }
+
+    const dataLength = Object.keys(this.data).length;
+    if (dataLength > 0) {
       this.createMargin(this.invertAxes);
       this.initSvg();
       this.formatTickLabel();
@@ -76,8 +82,16 @@ export class BarChartExtendedComponent implements OnChanges {
     }
   }
 
-  private getDataLength(data) {
-    return Object.keys(data).length;
+  private removeCategoryDuplicates(categories: Array<zluxBarChart.BarChartCategory>): Array<zluxBarChart.BarChartCategory> {
+    let result: Array<zluxBarChart.BarChartCategory> = [];
+    categories.forEach(c => {
+      const isCategoryPresented = result.some(r => r.field === c.field);
+      if(!isCategoryPresented) {
+        result.push(c);
+      }
+    });
+
+    return result;
   }
 
   /*
