@@ -295,7 +295,7 @@ export class BarChartExtendedComponent implements OnChanges {
   private collapseTicks() {
     // Get info about x-axis(width, height, etc)
     let xAxisDetails = this.chart.nativeElement.childNodes[0].getBBox();
-    let tickAmount = this.getDataLength(this.data);
+    let tickAmount = this.categories.length;
     let xAxisWidth = xAxisDetails.width;
     let tickDistance = xAxisWidth / tickAmount;
     this.tickDivider = (tickDistance < this.minDistance) ? this.floor(this.minDistance, tickDistance) : 1;
