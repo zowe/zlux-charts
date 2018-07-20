@@ -98,8 +98,10 @@ export class BarChartExtendedComponent implements OnChanges {
     let loggedFields = [];
     categories.forEach(c => {
       if(!loggedFields.some(f => f === c.field)) {
-        let withSameFields = categories.filter(c => c.field);
-        console.error("Duplicate fields(field:" + c.field + "): " + JSON.stringify(withSameFields));
+        let withSameFields = categories.filter(c2 => c.field === c2.field);
+        if(withSameFields.length > 1) {
+          console.error("Duplicate fields(field:" + c.field + "): " + JSON.stringify(withSameFields));
+        }
 
         loggedFields.push(c.field);
       }
