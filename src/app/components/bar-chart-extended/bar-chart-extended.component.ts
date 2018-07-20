@@ -59,7 +59,8 @@ export class BarChartExtendedComponent implements OnChanges {
     console.log(this.data);
 
     // Remove duplicates if categories changed
-    if(JSON.stringify(simpleChanges.categories.currentValue) !== JSON.stringify(simpleChanges.categories.previousValue)) {
+    // 'simpleChanges' contains ONLY changed props
+    if(simpleChanges.categories) {
       this.categories = this.removeCategoryDuplicates(this.categories);
     }
 
