@@ -94,6 +94,17 @@ export class BarChartExtendedComponent implements OnChanges {
       }
     });
 
+    // Log in console
+    let loggedFields = [];
+    categories.forEach(c => {
+      if(!loggedFields.some(f => f === c.field)) {
+        let withSameFields = categories.filter(c => c.field);
+        console.error("Duplicate fields(field:" + c.field + "): " + JSON.stringify(withSameFields));
+
+        loggedFields.push(c.field);
+      }
+    });
+
     return result;
   }
 
