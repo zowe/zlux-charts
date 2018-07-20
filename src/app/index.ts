@@ -14,7 +14,7 @@ export { ZluxBarChartModule, BarChartComponent } from './components/bar-chart/ba
 export { ZluxTableDataToChartPipe } from './components/bar-chart/bar-chart-input.pipe';
 
 export { ZluxBarChartExtendedModule, BarChartExtendedComponent } from './components/bar-chart-extended/bar-chart-extended.component';
-export { ZluxTableDataToChartExtendedDataPipe } from './components/bar-chart-extended/bar-chart-extended-input.pipe';
+export { ZluxTableDataToChartExtendedDataPipe, ZluxTableDataToChartExtendedCategoriesPipe } from './components/bar-chart-extended/bar-chart-extended-input.pipe';
 
 /*
   This program and the accompanying materials are

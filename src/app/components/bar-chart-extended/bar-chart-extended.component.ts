@@ -8,7 +8,7 @@ import { NgModule, Component, Input, ViewChild,
 import * as d3 from 'd3';
 
 import * as zluxBarChart from './bar-chart-extended.interfaces';
-import { ZluxTableDataToChartExtendedDataPipe } from './bar-chart-extended-input.pipe';
+import { ZluxTableDataToChartExtendedDataPipe, ZluxTableDataToChartExtendedCategoriesPipe } from './bar-chart-extended-input.pipe';
 
 @Component({
   selector: 'zlux-bar-chart-extended',
@@ -346,8 +346,8 @@ export class BarChartExtendedComponent implements OnChanges {
 
 @NgModule({
   imports: [],
-  exports: [BarChartExtendedComponent, ZluxTableDataToChartExtendedDataPipe],
-  declarations: [BarChartExtendedComponent, ZluxTableDataToChartExtendedDataPipe]
+  exports: [BarChartExtendedComponent, ZluxTableDataToChartExtendedDataPipe, ZluxTableDataToChartExtendedCategoriesPipe],
+  declarations: [BarChartExtendedComponent, ZluxTableDataToChartExtendedDataPipe, ZluxTableDataToChartExtendedCategoriesPipe]
 })
 export class ZluxBarChartExtendedModule { }
 

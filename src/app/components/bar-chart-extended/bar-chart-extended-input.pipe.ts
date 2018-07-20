@@ -7,11 +7,26 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import * as zluxBarChart from './bar-chart-extended.interfaces';
 
+@Pipe({name: 'zluxTableDataToChartExtendedCategories'})
+export class ZluxTableDataToChartExtendedCategoriesPipe implements PipeTransform {
+  transform(value: Array<any>, categoryId: string): Array<zluxBarChart.BarChartCategory> {
+    return value.map(r => {
+      return { field: r[categoryId] };
+    });
+  }
+}
+
 @Pipe({name: 'zluxTableDataToChartExtendedData'})
 export class ZluxTableDataToChartExtendedDataPipe implements PipeTransform {
-  transform(value: any): zluxBarChart.BarChartData {
+  transform(value: Array<any>, valueId: string, categoryId: string): zluxBarChart.BarChartData {
+    let result = {};
 
-    return {};
+    value.forEach(r => {
+      const key = r[categoryId];
+      result[key] = r[valueId];
+    });
+
+    return result;
   }
 }
 
