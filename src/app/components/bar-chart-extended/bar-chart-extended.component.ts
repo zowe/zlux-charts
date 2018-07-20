@@ -22,11 +22,10 @@ export class BarChartExtendedComponent implements OnChanges {
   @Input() data: zluxBarChart.BarChartData;
   @Input() categories: Array<zluxBarChart.BarChartCategory>;
   @Input() invertAxes: boolean = false;
+  @Input() size: any;
 
   private width: number;
   private height: number;
-  private parentDivHeight: any;
-  private parentDivWidth: any;
   private margin: any;
   private x: any;
   private y: any;
@@ -64,22 +63,25 @@ export class BarChartExtendedComponent implements OnChanges {
       this.categories = this.removeCategoryDuplicates(this.categories);
     }
 
+    // Render chart if any data exists
     const dataLength = Object.keys(this.data).length;
     if (dataLength > 0) {
-      this.createMargin(this.invertAxes);
-      this.initSvg();
-      this.formatTickLabel();
-      this.initAxis(this.invertAxes);
-      this.axisLabel(this.invertAxes);
-      this.drawAxis(this.invertAxes);
-      this.drawBars(this.invertAxes);
-      this.minTickDistance();
-      this.collapseTicks();
-      this.formatTickDisplayX();
-      this.formatTickDisplayY(this.invertAxes);
-      // d3.select(this.barChart.nativeElement.parentElement.parentElement.parentElement).on('resize', this.resizeWindow);
-      // this.resizeWindow(this.invertAxis);
+      this.render();
     }
+  }
+
+  private render() {
+    this.createMargin(this.invertAxes);
+    this.initSvg();
+    this.formatTickLabel();
+    this.initAxis(this.invertAxes);
+    this.axisLabel(this.invertAxes);
+    this.drawAxis(this.invertAxes);
+    this.drawBars(this.invertAxes);
+    this.minTickDistance();
+    this.collapseTicks();
+    this.formatTickDisplayX();
+    this.formatTickDisplayY(this.invertAxes);
   }
 
   private removeCategoryDuplicates(categories: Array<zluxBarChart.BarChartCategory>): Array<zluxBarChart.BarChartCategory> {
@@ -103,15 +105,25 @@ export class BarChartExtendedComponent implements OnChanges {
   }
 
   private initSvg() {
-    this.parentDivHeight = this.container.nativeElement.clientHeight - this.margin.bottom;
-    this.parentDivWidth = this.container.nativeElement.clientWidth - this.margin.right;
+    let parentDivHeight;
+    let parentDivWidth;
+
+    if(this.size) {
+      parentDivHeight = this.size.height;
+      parentDivWidth = this.size.width;
+    } else {
+      // Default: size of container
+      parentDivHeight = this.container.nativeElement.clientHeight;
+      parentDivWidth = this.container.nativeElement.clientWidth;
+    }
+
     this.svg = d3.select(this.chart.nativeElement);
     this.svg
-      .attr('width', this.parentDivWidth)
-      .attr('height', this.parentDivHeight)
+      .attr('width', parentDivWidth)
+      .attr('height', parentDivHeight)
       .attr('class', 'svg-content')
-    this.width = this.parentDivWidth - this.margin.left - this.margin.right;
-    this.height = this.parentDivHeight - this.margin.top - this.margin.bottom;
+    this.width = parentDivWidth - this.margin.left - this.margin.right;
+    this.height = parentDivHeight - this.margin.top - this.margin.bottom;
     this.g = this.svg
       .append('g')
       .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
