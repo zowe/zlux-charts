@@ -118,6 +118,10 @@ export class BarChartExtendedComponent implements OnChanges {
     }
 
     this.svg = d3.select(this.chart.nativeElement);
+
+    // Clear from prev chart
+    this.svg.selectAll('*').remove();
+
     this.svg
       .attr('width', parentDivWidth)
       .attr('height', parentDivHeight)
