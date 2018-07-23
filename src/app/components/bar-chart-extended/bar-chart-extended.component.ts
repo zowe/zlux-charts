@@ -24,31 +24,30 @@ export class BarChartExtendedComponent implements OnChanges {
   @Input() invertAxes: boolean = false;
   @Input() size: any;
 
+  @Input() categoryLabel: string = "Category";
+  @Input() dataLabel: string = "Value";
+
+  @Input() fontSizeX: number = 10;
+  @Input() fontSizeY: number = 10;
+
   private width: number;
   private height: number;
   private margin: any;
+
   private x: any;
   private y: any;
   private xAxis: any;
   private yAxis: any;
-  private svg: any;
-  private g: any;
-  private state: any;
-  private viewBoxValues: any;
-  private newH: any;
-  private invertAxis: any;
-  private xLabel;
-  private yLabel;
+
+  private svg;
+  private g;
   private bars;
-  private domainLabel: string;
-  private rangeLabel: string;
+
   private rotation: any;
   private xDistanceLabel: any;
   private yDistanceLabel: any;
   private textAnchor: any;
-  private fontSizeX: any;
-  private fontSizeY: any;
-  private xAxisDetails: any;
+
   private tickDivider: any;
   private minDistance: any;
 
@@ -76,7 +75,6 @@ export class BarChartExtendedComponent implements OnChanges {
     this.initSvg();
     this.formatTickLabel();
     this.initAxis(this.invertAxes);
-    this.axisLabel(this.invertAxes);
     this.drawAxis(this.invertAxes);
     this.drawBars(this.invertAxes);
     this.minTickDistance();
@@ -211,12 +209,6 @@ export class BarChartExtendedComponent implements OnChanges {
     }
   }
 
-  // X and Y axis Labeling changes depending on orientation
-  private axisLabel(invertAxis: boolean) {
-    this.domainLabel = invertAxis ? this.yLabel : this.xLabel
-    this.rangeLabel = invertAxis ? this.xLabel : this.yLabel;
-  }
-
   /*
     For drawAxis, the core functionality behind drawing the two axis is the same. The difference is the external styling
     that is necessary for traditional(vertical) bar charts, as the x labels need to be rotated.
@@ -297,10 +289,8 @@ export class BarChartExtendedComponent implements OnChanges {
     /*
       An extremely easy way to create tooltips on d3 bar charts without using an external library
     */
-    let tooltipCategory = 'Category';
-    let tooltipValue = 'Value';
     this.bars.append('svg:title')
-             .text((d) => tooltipCategory + ': ' + d.category + '\n' + tooltipValue + ': ' + d.value);
+             .text((d) => this.categoryLabel + ': ' + d.category + '\n' + this.dataLabel + ': ' + d.value);
   }
 
   /*
