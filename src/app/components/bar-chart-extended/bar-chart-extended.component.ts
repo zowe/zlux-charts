@@ -103,8 +103,8 @@ export class BarChartExtendedComponent implements OnChanges {
     this.createMargin(this.invertAxes);
     this.initSvg();
     this.formatTickLabel();
-    this.initAxis(this.invertAxes);
-    this.drawAxis(this.invertAxes);
+    this.initAxes(this.invertAxes);
+    this.drawAxes(this.invertAxes);
     this.drawBars(this.invertAxes);
     this.minTickDistance();
     this.collapseTicks();
@@ -116,8 +116,8 @@ export class BarChartExtendedComponent implements OnChanges {
     When the barcharts are inverted the margins necessary to display the entire graph are changed.
     Method allocates margin depending on whether invertAxes is true or false
   */
-  private createMargin(invertAxis: boolean) {
-    this.margin = invertAxis ? {top: 20, right: 30, bottom: 20, left:80} : {top: 10, right: 20, bottom: 40, left:45};
+  private createMargin(invertAxes: boolean) {
+    this.margin = invertAxes ? {top: 20, right: 30, bottom: 20, left:80} : {top: 10, right: 20, bottom: 40, left:45};
   }
 
   private initSvg() {
@@ -186,7 +186,7 @@ export class BarChartExtendedComponent implements OnChanges {
     The functionality behind the next methods takes in the boolean value and shows the correct orientation.
     The x value and the y value, and domain are essentially switched (inverted the axis)
   */
-  private initAxis(invertAxes: boolean) {
+  private initAxes(invertAxes: boolean) {
     this.initXAxis(invertAxes);
     this.initYAxis(invertAxes);
   }
@@ -217,7 +217,7 @@ export class BarChartExtendedComponent implements OnChanges {
     For drawAxis, the core functionality behind drawing the two axis is the same. The difference is the external styling
     that is necessary for traditional(vertical) bar charts, as the x labels need to be rotated.
   */
-  private drawAxis(invertAxes: boolean) {
+  private drawAxes(invertAxes: boolean) {
     const bottomAxis = d3.axisBottom(this.x);
     const leftAxis = d3.axisLeft(this.y);
 
