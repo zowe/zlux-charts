@@ -70,6 +70,35 @@ export class BarChartExtendedComponent implements OnChanges {
     }
   }
 
+  private removeCategoryDuplicates(categories: Array<zluxBarChart.BarChartCategory>): Array<zluxBarChart.BarChartCategory> {
+    let result: Array<zluxBarChart.BarChartCategory> = [];
+    categories.forEach(c => {
+      const isCategoryPresented = result.some(r => r.field === c.field);
+      if(!isCategoryPresented) {
+        result.push(c);
+      }
+    });
+
+    this.logCategoryDuplicates(categories);
+    return result;
+  }
+
+  private logCategoryDuplicates(categories: Array<zluxBarChart.BarChartCategory>) {
+    let categoriesCopy = [...categories];
+
+    while(categoriesCopy.length > 0) {
+      let checkField = categoriesCopy[0].field;
+      let withSameFields = categoriesCopy.filter(c => c.field === checkField);
+
+      if(withSameFields.length > 1) {
+        console.error("Duplicate fields(field:" + checkField + "): " + JSON.stringify(withSameFields));
+      }
+
+      // Remove checked categories
+      categoriesCopy = categoriesCopy.filter(c => c.field !== checkField);
+    }
+  }
+
   private render() {
     this.createMargin(this.invertAxes);
     this.initSvg();
@@ -81,31 +110,6 @@ export class BarChartExtendedComponent implements OnChanges {
     this.collapseTicks();
     this.formatTickDisplayX();
     this.formatTickDisplayY(this.invertAxes);
-  }
-
-  private removeCategoryDuplicates(categories: Array<zluxBarChart.BarChartCategory>): Array<zluxBarChart.BarChartCategory> {
-    let result: Array<zluxBarChart.BarChartCategory> = [];
-    categories.forEach(c => {
-      const isCategoryPresented = result.some(r => r.field === c.field);
-      if(!isCategoryPresented) {
-        result.push(c);
-      }
-    });
-
-    // Log in console
-    let loggedFields = [];
-    categories.forEach(c => {
-      if(!loggedFields.some(f => f === c.field)) {
-        let withSameFields = categories.filter(c2 => c.field === c2.field);
-        if(withSameFields.length > 1) {
-          console.error("Duplicate fields(field:" + c.field + "): " + JSON.stringify(withSameFields));
-        }
-
-        loggedFields.push(c.field);
-      }
-    });
-
-    return result;
   }
 
   /*
@@ -286,9 +290,7 @@ export class BarChartExtendedComponent implements OnChanges {
                .attr('height', (d) => this.height - this.y(d.value));
     }
 
-    /*
-      An extremely easy way to create tooltips on d3 bar charts without using an external library
-    */
+    // An extremely easy way to create tooltips on d3 bar charts without using an external library
     this.bars.append('svg:title')
              .text((d) => this.categoryLabel + ': ' + d.category + '\n' + this.dataLabel + ': ' + d.value);
   }
@@ -328,8 +330,8 @@ export class BarChartExtendedComponent implements OnChanges {
 
   private formatTickDisplayY(invertAxis: boolean) {
     if (!invertAxis) {
-      let ticks = d3.select(this.chart.nativeElement).selectAll('.y-axis .tick text')
-      ticks.style('display', (d, i) => (i % 2) ? 'none' : 'initial')
+      let ticks = d3.select(this.chart.nativeElement).selectAll('.y-axis .tick text');
+      ticks.style('display', (d, i) => (i % 2) ? 'none' : 'initial');
     }
   }
 }
