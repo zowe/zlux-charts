@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./out_tsc",
+    "baseUrl": ".",
+    "removeComments": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": ".",
+    "module": "amd",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "paths": {}
+  }
+}
