@@ -7,6 +7,8 @@ SPDX-License-Identifier: EPL-2.0
 
 Copyright Contributors to the Zowe Project.
 
+**NOTE: This repository is archived as it is not currently developed or maintained. If you would like to become a maintainer or use this library, [find the Web UI squad members](https://github.com/zowe/community#communication-channels) to discuss the opportunities.**
+
 Adding the library to your package:
 `npm install "./local/path/to/library" --save-dev`
 
